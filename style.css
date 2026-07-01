@@ -9,3 +9,15 @@ section.active {
 .tabswitch button.active {
     background: #a5a5a5;
 }
+
+#emptyChart {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    background: #3a3a3a;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+    color: #888;
+}

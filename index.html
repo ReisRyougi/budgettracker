@@ -17,9 +17,16 @@
         </nav>
     </header>
     <main>
-        <section id="balance" class="active">test1</section>
+        <section id="balance" class="active">
+            <div id="chartContainer">
+                <div id="emptyChart">No wallets added</div>
+            </div>
+            <button id="addWalletBtn">Add Wallet</button>
+            <div id="walletList"></div>
+        </section>
         <section id="transactions">test2</section>
     </main>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
