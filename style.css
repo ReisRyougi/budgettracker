@@ -21,3 +21,57 @@ section.active {
     margin: 0 auto;
     color: #888;
 }
+
+#overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 100;
+    justify-content: center;
+    align-items: center;
+}
+
+#overlay.open {
+    display: flex;
+}
+
+#addWalletModal {
+    background: #a5a5a5;
+    padding: 2rem;
+    border-radius: 0.5rem;
+    width: min(90%, 30rem);
+    position: relative;
+}
+
+#closeModalBtn {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+    font-size: 1.2rem;
+}
+
+.colorOption {
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    cursor: pointer;
+    border: 3px solid transparent;
+}
+
+.colorOption.selected {
+    border-color: white;
+}
+
+#colorPicker {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
