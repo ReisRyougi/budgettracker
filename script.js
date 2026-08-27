@@ -5,6 +5,12 @@ const transactionsSection = document.getElementById('transactions');
 const addWalletBtn = document.getElementById('addWalletBtn');
 const overlay = document.getElementById('overlay');
 const closeModalBtn = document.getElementById('closeModalBtn');
+const addWalletModal = document.getElementById('addWalletModal')
+
+const fiatRadio = document.getElementById('newWalletTypeFiat');
+const cryptoRadio = document.getElementById('newWalletTypeCrypto');
+const fiatFields = document.getElementById('fiatFields');
+const cryptoFields = document.getElementById('cryptoFields');
 
 function switchTab(showSection, activeBtn, hideSection, inactiveBtn) {
     showSection.classList.add('active');
@@ -36,3 +42,18 @@ addWalletBtn.onclick = () => {
 closeModalBtn.onclick = () => {
     overlay.classList.remove('open');
 }
+
+overlay.onclick = (event) => {
+    if(!addWalletModal.contains(event.target)){
+        overlay.classList.remove('open')
+    }
+}
+
+function toggleWalletType() {
+    const isCrypto = cryptoRadio.checked;
+    fiatFields.style.display = isCrypto ? 'none' : 'block';
+    cryptoFields.style.display = isCrypto ? 'block' : 'none';
+}
+
+fiatRadio.onchange = toggleWalletType;
+cryptoRadio.onchange = toggleWalletType;
