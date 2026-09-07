@@ -19,6 +19,8 @@ const initialBalance = document.getElementById('initialBalance');
 const coinAmount = document.getElementById('coinAmount');
 const cryptoName = document.getElementById('coinSelect');
 
+const wallets = JSON.parse(localStorage.getItem('wallets')) || [];
+
 
 function switchTab(showSection, activeBtn, hideSection, inactiveBtn) {
     showSection.classList.add('active');
@@ -72,27 +74,57 @@ addWalletForm.onsubmit = (event) => {
 }
 
 function submitNewWallet (){
-    if (newWalletName.value === '') {
+    if(newWalletName.value === '') {
             window.alert('Name cannot be empty.');
+            return;
         }
-    else if(!cryptoRadio.checked && (initialBalance.value === '')) {
-        window.alert('Initial balance cannot be empty.')
+
+    if(!cryptoRadio.checked && (initialBalance.value === '')) {
+        window.alert('Initial balance cannot be empty.');
+        return;
     }
-    else if(cryptoRadio.checked && (coinAmount.value === '')) {
-        window.alert('Initial crypto balance cannot be empty.')
+
+    if(cryptoRadio.checked && (coinAmount.value === '')) {
+        window.alert('Initial crypto balance cannot be empty.');
+        return;
     }
-    else {
-        const walletName = newWalletName.value;
-        console.log(walletName);
-        if (!cryptoRadio.checked){
-            let walletBalance = initialBalance.value;
-            console.log(walletBalance);
-        }
-        else {
-            let walletCryptoBalance = coinAmount.value;
-            const coinName = cryptoName.value;
-            console.log(walletCryptoBalance);
-            console.log(coinName);
-        }
+
+    if(selectedColor.value === '') {
+        window.alert('Please select a color.');
+        return;
     }
+    let wallet;
+
+    if(cryptoRadio.checked){
+        wallet = {
+            id: Date.now(),
+            name: newWalletName.value,
+            type: 'crypto',
+            coin: cryptoName.value,
+            amount: parseFloat(coinAmount.value),
+            color: selectedColor.value
+        };
+    } else {
+        wallet = {
+            id: Date.now(),
+            name: newWalletName.value,
+            type: 'manual',
+            balance: parseFloat(initialBalance.value),
+            color: selectedColor.value
+        };
+    }
+
+    // save wallet
+    wallets.push(wallet);
+    localStorage.setItem('wallets', JSON.stringify(wallets));
+
+    // close and reset
+    overlay.classList.remove('open');
+    addWalletForm.reset();
+    document.querySelectorAll('.colorOption').forEach(o => o.classList.remove('selected'));
+    cryptoFields.style.display = 'none';
+    fiatFields.style.display = 'block';
+
+    console.log('Wallet added:', wallet);
+    console.log('All wallets:', wallets);
 }
