@@ -75,3 +75,26 @@ section.active {
     gap: 0.5rem;
     flex-wrap: wrap;
 }
+
+#walletList {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-top: 1rem;
+}
+
+.walletCard {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.75rem 1rem;
+    border: 1px solid black;
+    border-radius: 0.5rem;
+}
+
+.walletColor {
+    width: 1rem;
+    height: 1rem;
+    border-radius: 3px;
+    flex-shrink: 0; /* prevents the square from squishing if text is long */
+}

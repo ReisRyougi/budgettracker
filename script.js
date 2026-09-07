@@ -18,8 +18,47 @@ const addWalletForm = document.getElementById('addWalletForm');
 const initialBalance = document.getElementById('initialBalance');
 const coinAmount = document.getElementById('coinAmount');
 const cryptoName = document.getElementById('coinSelect');
+const walletList = document.getElementById('walletList');
 
 const wallets = JSON.parse(localStorage.getItem('wallets')) || [];
+
+function renderWallets() {
+    walletList.innerHTML = '';
+
+    wallets.forEach(wallet => {
+        const card = document.createElement('div');
+        card.className = 'walletCard';
+
+        const colorSquare = document.createElement('div');
+        colorSquare.className = 'walletColor';
+        colorSquare.style.background = wallet.color;
+
+        const nameEl = document.createElement('span');
+        nameEl.innerText = wallet.name;
+
+        const typeEl = document.createElement('span');
+        typeEl.innerText = wallet.type === 'crypto' ? 'Crypto' : 'Fiat';
+
+        const balanceEl = document.createElement('span');
+        if (wallet.type === 'crypto') {
+            balanceEl.innerText = `${wallet.amount} ${wallet.coin}`;
+        } else {
+            balanceEl.innerText = `${wallet.balance} €`;
+        }
+
+        const deleteBtn = document.createElement('button');
+        deleteBtn.innerText = '✕';
+        deleteBtn.onclick = () => deleteWallet(wallet.id);
+
+        card.appendChild(colorSquare);
+        card.appendChild(nameEl);
+        card.appendChild(typeEl);
+        card.appendChild(balanceEl);
+        card.appendChild(deleteBtn);
+
+        walletList.appendChild(card);
+    });
+}
 
 
 function switchTab(showSection, activeBtn, hideSection, inactiveBtn) {
@@ -127,4 +166,7 @@ function submitNewWallet (){
 
     console.log('Wallet added:', wallet);
     console.log('All wallets:', wallets);
+    renderWallets();
 }
+
+renderWallets();
