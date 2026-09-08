@@ -19,8 +19,9 @@ const initialBalance = document.getElementById('initialBalance');
 const coinAmount = document.getElementById('coinAmount');
 const cryptoName = document.getElementById('coinSelect');
 const walletList = document.getElementById('walletList');
+const selectedColor = document.getElementById('selectedColor');
 
-const wallets = JSON.parse(localStorage.getItem('wallets')) || [];
+let wallets = JSON.parse(localStorage.getItem('wallets')) || [];
 
 function renderWallets() {
     walletList.innerHTML = '';
@@ -166,6 +167,12 @@ function submitNewWallet (){
 
     console.log('Wallet added:', wallet);
     console.log('All wallets:', wallets);
+    renderWallets();
+}
+
+function deleteWallet(id) {
+    wallets = wallets.filter(w => w.id !== id)
+    localStorage.setItem('wallets', JSON.stringify(wallets));
     renderWallets();
 }
 
