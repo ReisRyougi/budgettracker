@@ -23,8 +23,18 @@ const selectedColor = document.getElementById('selectedColor');
 
 let wallets = JSON.parse(localStorage.getItem('wallets')) || [];
 
-function renderWallets() {
+async function renderWallets() {
     walletList.innerHTML = '';
+
+    const cryptoWallets = wallets.filter(w => w.type === 'crypto');
+    const coinIds = cryptoWallets.map(w => w.coin).join(',');
+    
+    let prices = {};
+    if (cryptoWallets.length > 0) {
+        const response = await fetch(`https://api.coingecko.com/api/v3/simple/price?ids=${coinIds}&vs_currencies=eur`);
+        prices = await response.json();
+        console.log(prices);
+    }
 
     wallets.forEach(wallet => {
         const card = document.createElement('div');
@@ -42,7 +52,9 @@ function renderWallets() {
 
         const balanceEl = document.createElement('span');
         if (wallet.type === 'crypto') {
-            balanceEl.innerText = `${wallet.amount} ${wallet.coin}`;
+            const price = prices[wallet.coin]?.eur ?? '?';
+            const euroValue = price !== '?' ? (wallet.amount * price).toFixed(2) : '?';
+            balanceEl.innerText = `${wallet.amount} ${wallet.coin} (≈ ${euroValue})`;
         } else {
             balanceEl.innerText = `${wallet.balance} €`;
         }
