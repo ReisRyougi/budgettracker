@@ -10,9 +10,14 @@ section.active {
     background: #a5a5a5;
 }
 
+#chartContainer {
+    display: flex;
+    justify-content: center;
+}
+
 #emptyChart {
-    width: 200px;
-    height: 200px;
+    width: 600px;
+    height: 600px;
     border-radius: 50%;
     background: #3a3a3a;
     display: flex;
@@ -20,6 +25,10 @@ section.active {
     justify-content: center;
     margin: 0 auto;
     color: #888;
+}
+
+#walletChart {
+    display: none;
 }
 
 #overlay {

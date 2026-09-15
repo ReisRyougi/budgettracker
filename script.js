@@ -21,7 +21,12 @@ const cryptoName = document.getElementById('coinSelect');
 const walletList = document.getElementById('walletList');
 const selectedColor = document.getElementById('selectedColor');
 
+const emptyChart = document.getElementById('emptyChart');
+const walletChart = document.getElementById('walletChart');
+
 let wallets = JSON.parse(localStorage.getItem('wallets')) || [];
+
+let chart = null;
 
 async function renderWallets() {
     walletList.innerHTML = '';
@@ -71,7 +76,9 @@ async function renderWallets() {
 
         walletList.appendChild(card);
     });
+    renderChart(prices);
 }
+
 
 
 function switchTab(showSection, activeBtn, hideSection, inactiveBtn) {
@@ -186,6 +193,52 @@ function deleteWallet(id) {
     wallets = wallets.filter(w => w.id !== id)
     localStorage.setItem('wallets', JSON.stringify(wallets));
     renderWallets();
+}
+
+function renderChart(prices) {
+
+    const labels = [];
+    const colors = [];
+    const values = [];
+
+    wallets.forEach(wallet => {
+        labels.push(wallet.name);
+        colors.push(wallet.color);
+        if (wallet.type === 'crypto') {
+            values.push((wallet.amount * (prices[wallet.coin]?.eur ?? 0)));
+        }
+        else {
+            values.push(wallet.balance);
+        }
+    })
+
+    if (chart) {
+        chart.destroy();
+        chart = null;
+    }
+
+    if (wallets.length > 0) {
+        emptyChart.style.display = 'none';
+        walletChart.style.display = 'block';
+    }
+    else {
+        emptyChart.style.display = 'flex';
+        walletChart.style.display = 'none';
+    }
+
+    chart = new Chart(walletChart.getContext('2d'), {
+            type: 'doughnut',
+            data: {
+                labels: labels,
+                datasets: [{
+                    data: values,
+                    backgroundColor: colors
+                }]
+            },
+            options: {
+                responsive: false,
+            }
+    });
 }
 
 renderWallets();
