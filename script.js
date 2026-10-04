@@ -5,7 +5,9 @@ const transactionsSection = document.getElementById('transactions');
 const addWalletBtn = document.getElementById('addWalletBtn');
 const overlay = document.getElementById('overlay');
 const closeModalBtn = document.getElementById('closeModalBtn');
-const addWalletModal = document.getElementById('addWalletModal')
+const addWalletModal = document.getElementById('addWalletModal');
+const transactionModal = document.getElementById('transactionModal');
+const addTransactionBtn = document.getElementById('addTransactionBtn');
 
 const fiatRadio = document.getElementById('newWalletTypeFiat');
 const cryptoRadio = document.getElementById('newWalletTypeCrypto');
